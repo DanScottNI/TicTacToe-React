@@ -1,12 +1,12 @@
 ﻿import React from 'react';
 import { Square } from './Square';
 
-interface IBoardProps {
+type BoardProps = {
     onClick: (ev: any) => void;
     squares: string[];
 }
 
-export class Board extends React.Component<IBoardProps> {
+export class Board extends React.Component<BoardProps> {
 
     renderSquare(i: number) {
         return <Square
@@ -14,27 +14,14 @@ export class Board extends React.Component<IBoardProps> {
             onClick={() => this.props.onClick(i)} />;
     }
 
-
-
     render() {
-
+        let rows: number[] = [0, 1, 2];
+        let columns: number[] = [0, 1, 2];
         return (
             <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+                {rows.map((row, rowIndex) => <div className="board-row">
+                    {columns.map((col, colindex) => this.renderSquare((row * (columns.length)) + col))}
+                </div>)}
             </div>
         );
     }

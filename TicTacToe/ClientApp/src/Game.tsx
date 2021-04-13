@@ -3,24 +3,19 @@ import { Board } from './Board';
 import { calculateWinner } from './index';
 import { MoveHistoryButton } from './MoveHistoryButton';
 
-
-interface IGameProps {
-
-}
-
-interface IGameHistory {
+type GameHistory ={
     squares: string[];
 }
 
-interface IGameState {
-    history: IGameHistory[];
+type GameState = {
+    history: GameHistory[];
     stepNumber: number;
     xIsNext: boolean;
     squares?: string[];
 }
 
-export class Game extends React.Component<IGameProps, IGameState> {
-    constructor(props: IGameProps) {
+export class Game extends React.Component<{}, GameState> {
+    constructor(props: {}) {
         super(props);
         this.state = {
             history: [
@@ -64,7 +59,7 @@ export class Game extends React.Component<IGameProps, IGameState> {
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
 
-        const moves = history.map((step, move, array: IGameHistory[]) => {
+        const moves = history.map((step, move, array: GameHistory[]) => {
             let desc = 'Go to game start';
 
             if (move > 0) {
