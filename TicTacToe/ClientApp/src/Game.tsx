@@ -1,6 +1,8 @@
 ﻿import React from 'react';
 import { Board } from './Board';
 import { calculateWinner } from './index';
+import { MoveHistoryButton } from './MoveHistoryButton';
+
 
 interface IGameProps {
 
@@ -82,7 +84,7 @@ export class Game extends React.Component<IGameProps, IGameState> {
 
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <MoveHistoryButton bold={ step == current } onClick={() => this.jumpTo(move)} value={desc}></MoveHistoryButton>
                 </li>
             );
         });
