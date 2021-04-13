@@ -62,10 +62,24 @@ export class Game extends React.Component<IGameProps, IGameState> {
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
 
-        const moves = history.map((step, move) => {
-            const desc = move ?
-                'Go to move #' + move :
-                'Go to game start';
+        const moves = history.map((step, move, array: IGameHistory[]) => {
+            let desc = 'Go to game start';
+
+            if (move > 0) {
+                desc = 'Go to move #' + move;
+
+                // Calculate which square changed last.
+                let difference: number = 0;
+
+                for (let i = 0; i < step.squares.length; i++) {
+                    if (step.squares[i] !== array[move - 1].squares[i]) {
+                        difference = i;
+                    }
+                }
+
+                desc += " (the square at row: " + (Math.floor(difference / 3) + 1) + " column: " + ((difference % 3) + 1) + " changed to " + step.squares[difference];
+            }
+
             return (
                 <li key={move}>
                     <button onClick={() => this.jumpTo(move)}>{desc}</button>
